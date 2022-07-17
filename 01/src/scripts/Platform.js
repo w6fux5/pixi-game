@@ -5,11 +5,32 @@ const TILE_SIZE = 64;
 
 export class Platform {
   constructor({ rows, cols, x }) {
+    this.dx = -5;
+
     this.rows = rows;
     this.cols = cols;
 
+    this.width = cols * TILE_SIZE;
+    this.height = rows * TILE_SIZE;
+
     this.createContainer(x);
     this.createTiles();
+  }
+
+  get left() {
+    return this.container.x;
+  }
+
+  get right() {
+    return this.left + this.width;
+  }
+
+  get top() {
+    return this.container.y;
+  }
+
+  get bottom() {
+    return this.top + this.height;
   }
 
   createContainer(x) {
@@ -27,10 +48,18 @@ export class Platform {
   }
 
   createTile(row, col) {
-    const texture = row === 0 ? 'platform' : 'tile'
+    const texture = row === 0 ? "platform" : "tile";
     const tile = new PIXI.Sprite(Globals.resources[texture].texture);
     this.container.addChild(tile);
     tile.x = col * tile.width;
     tile.y = row * tile.height;
+  }
+
+  move() {
+    this.container.x += this.dx;
+
+    if (this.right < 0) {
+      this.container.emit("hidden");
+    }
   }
 }

@@ -26,5 +26,6 @@ export class MainScene {
 
   update(dt) {
     this.bg.update(dt)
+    this.platforms.update()
   }
 }
