@@ -10,22 +10,50 @@ export class Hero {
   }
 
   createSprite() {
-    this.sprite = new PIXI.AnimatedSprite([
+    const sprite = new PIXI.AnimatedSprite([
       Globals.resources["walk1"].texture,
       Globals.resources["walk2"].texture,
     ]);
-    this.sprite.x = 200
-    this.sprite.y = 0
 
-    this.sprite.loop = true;
-    this.sprite.animationSpeed = 0.1;
-    this.sprite.play();
+    sprite.x = 200;
+    sprite.y = 0;
+    sprite.loop = true;
+    sprite.animationSpeed = 0.1;
+    sprite.play();
+
+    this.sprite = sprite;
+  }
+
+  stayOnPlatform(platform) {
+    this.platform = platform;
+    this.dy = 0;
+    this.sprite.y = platform.top - this.sprite.height;
   }
 
   update() {
-    if(!this.platform) {
-        ++this.dy
-        this.sprite.y += this.dy
+    if (!this.platform) {
+      ++this.dy;
+      this.sprite.y += this.dy;
     }
+  }
+
+  get left() {
+    return this.sprite.x;
+  }
+
+  get right() {
+    return this.left + this.sprite.width;
+  }
+
+  get top() {
+    return this.sprite.y;
+  }
+
+  get bottom() {
+    return this.top + this.sprite.height;
+  }
+
+  get nextBottom() {
+    return this.bottom + this.dy;
   }
 }

@@ -19,7 +19,8 @@ export class Background {
   createSprite(i) {
     const sprite = new PIXI.Sprite(Globals.resources["background"].texture);
     sprite.x = sprite.width * i;
-    sprite.y = 0;
+    // sprite.y = 0
+    sprite.height = window.innerHeight;
     this.container.addChild(sprite);
     this.sprites.push(sprite);
   }

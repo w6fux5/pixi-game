@@ -37,10 +37,8 @@ export class Platforms {
 
     platform.container.once("hidden", () => {
       this.platforms = this.platforms.filter((item) => item !== platform);
-      platform.container.destroy()
+      platform.container.destroy();
     });
-
-    console.log(this.platforms)
   }
 
   update(dt) {
@@ -50,6 +48,12 @@ export class Platforms {
 
     this.platforms.forEach((platform) => {
       platform.move();
+    });
+  }
+
+  checkCollision(hero) {
+    this.platforms.forEach((platform) => {
+      platform.checkCollision(hero)
     });
   }
 

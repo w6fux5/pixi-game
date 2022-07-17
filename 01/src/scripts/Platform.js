@@ -62,4 +62,28 @@ export class Platform {
       this.container.emit("hidden");
     }
   }
+
+  checkCollision(hero) {
+    if (this.isCollideTop(hero)) {
+      hero.stayOnPlatform(this);
+      return;
+    }
+
+    if (hero.platform === this) {
+      hero.platform = null;
+    }
+  }
+
+  isCollideTop(hero) {
+    console.log(hero.bottom, this.top)
+    return (
+      hero.right >= this.left &&
+      hero.left <= this.right &&
+      hero.bottom <= this.top &&
+      hero.nextBottom >= this.top
+    );
+  }
+
+  isCollideLeft(hero) {
+  }
 }
