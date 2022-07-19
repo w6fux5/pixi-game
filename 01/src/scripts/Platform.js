@@ -21,6 +21,14 @@ export class Platform {
     return this.container.x;
   }
 
+  get nextLeft() {
+    return this.left + this.dx;
+  }
+
+  // get nextRight() {
+  //   return this.right + this.dx;
+  // }
+
   get right() {
     return this.left + this.width;
   }
@@ -69,13 +77,21 @@ export class Platform {
       return;
     }
 
+    if (this.isCollideLeft(hero)) {
+      hero.moveLeftByPlatform(this);
+    }
+
+    // if(this.ifCollideRight(hero)) {
+    //   hero.moveByPlatformRight(this)
+    // }
+
     if (hero.platform === this) {
       hero.platform = null;
     }
   }
 
   isCollideTop(hero) {
-    console.log(hero.bottom, this.top)
+    console.log(hero.bottom, this.top);
     return (
       hero.right >= this.left &&
       hero.left <= this.right &&
@@ -85,5 +101,20 @@ export class Platform {
   }
 
   isCollideLeft(hero) {
+    return (
+      hero.bottom >= this.top &&
+      hero.top <= this.bottom &&
+      hero.right <= this.left &&
+      hero.right >= this.nextLeft
+    );
   }
+
+  // ifCollideRight(hero) {
+  //   return (
+  //     hero.bottom >= this.top &&
+  //     hero.top <= this.bottom &&
+  //     hero.left >= this.right &&
+  //     hero.left <= this.nextRight
+  //   );
+  // }
 }

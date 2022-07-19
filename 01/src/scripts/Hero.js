@@ -1,5 +1,6 @@
 import * as PIXI from "pixi.js";
 import { Globals } from "./Globals";
+import { Platform } from "./Platform";
 
 export class Hero {
   constructor() {
@@ -28,6 +29,21 @@ export class Hero {
     this.platform = platform;
     this.dy = 0;
     this.sprite.y = platform.top - this.sprite.height;
+  }
+
+  moveLeftByPlatform(platform) {
+    this.sprite.x = platform.nextLeft - this.sprite.width;
+  }
+
+  // moveByPlatformRight(Platform) {
+  //   this.sprite.x = this.sprite.x + 10
+  // }
+
+  startJump() {
+    if (this.platform) {
+      this.platform = null;
+      this.dy = -18;
+    }
   }
 
   update() {

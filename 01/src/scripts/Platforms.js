@@ -16,7 +16,7 @@ export class Platforms {
         max: 9,
       },
       offset: {
-        min: 60,
+        min: 64,
         max: 200,
       },
     };

@@ -14,6 +14,7 @@ export class MainScene {
     this.createBackground();
     this.createPlatforms();
     this.createHero();
+    this.eventListener();
   }
 
   createBackground() {
@@ -29,6 +30,13 @@ export class MainScene {
   createHero() {
     this.hero = new Hero();
     this.container.addChild(this.hero.sprite);
+  }
+
+  eventListener() {
+    this.container.interactive = true;
+    this.container.on("pointerdown", () => {
+      this.hero.startJump();
+    });
   }
 
   update(dt) {
