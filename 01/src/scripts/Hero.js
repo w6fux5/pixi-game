@@ -6,6 +6,7 @@ export class Hero {
   constructor() {
     this.dy = 0;
     this.platform = null;
+    this.jumpIndex = 0;
 
     this.createSprite();
   }
@@ -28,6 +29,7 @@ export class Hero {
   stayOnPlatform(platform) {
     this.platform = platform;
     this.dy = 0;
+    this.jumpIndex = 0
     this.sprite.y = platform.top - this.sprite.height;
   }
 
@@ -35,12 +37,9 @@ export class Hero {
     this.sprite.x = platform.nextLeft - this.sprite.width;
   }
 
-  // moveByPlatformRight(Platform) {
-  //   this.sprite.x = this.sprite.x + 10
-  // }
-
   startJump() {
-    if (this.platform) {
+    if (this.platform || this.jumpIndex === 1) {
+      ++this.jumpIndex;
       this.platform = null;
       this.dy = -18;
     }
