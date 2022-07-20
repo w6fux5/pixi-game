@@ -91,7 +91,6 @@ export class Platform {
   }
 
   isCollideTop(hero) {
-    console.log(hero.bottom, this.top);
     return (
       hero.right >= this.left &&
       hero.left <= this.right &&

@@ -8,20 +8,24 @@ export class Hero {
     this.platform = null;
     this.jumpIndex = 0;
 
+    this.texture = [
+      Globals.resources["walk1"].texture,
+      Globals.resources["walk2"].texture,
+    ];
+
     this.createSprite();
   }
 
   createSprite() {
-    const sprite = new PIXI.AnimatedSprite([
-      Globals.resources["walk1"].texture,
-      Globals.resources["walk2"].texture,
-    ]);
+    const sprite = new PIXI.AnimatedSprite(this.texture);
 
     sprite.x = 200;
     sprite.y = 0;
     sprite.loop = true;
     sprite.animationSpeed = 0.1;
-    sprite.play();
+    // sprite.interactive = true
+    // sprite.buttonMode = true
+    // sprite.play();
 
     this.sprite = sprite;
   }
@@ -29,7 +33,7 @@ export class Hero {
   stayOnPlatform(platform) {
     this.platform = platform;
     this.dy = 0;
-    this.jumpIndex = 0
+    this.jumpIndex = 0;
     this.sprite.y = platform.top - this.sprite.height;
   }
 
@@ -43,12 +47,22 @@ export class Hero {
       this.platform = null;
       this.dy = -18;
     }
+
+    if (this.jumpIndex === 2) {
+      this.sprite.stop();
+      this.sprite.texture = Globals.resources["jump"].texture;
+    }
   }
 
   update() {
     if (!this.platform) {
       ++this.dy;
       this.sprite.y += this.dy;
+    }
+
+    if (this.dy === 10) {
+
+      this.sprite.play();
     }
   }
 
