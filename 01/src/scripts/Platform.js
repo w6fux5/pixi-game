@@ -1,10 +1,15 @@
 import * as PIXI from "pixi.js";
 import { Globals } from "./Globals";
+import { Diamond } from "./Diamond";
 
 const TILE_SIZE = 64;
 
 export class Platform {
   constructor({ rows, cols, x }) {
+    this.diamonds = [];
+    this.diamondsOffsetMin = 100;
+    this.diamondsOffsetMax = 200;
+
     this.dx = -5;
 
     this.rows = rows;
@@ -15,30 +20,19 @@ export class Platform {
 
     this.createContainer(x);
     this.createTiles();
+    this.createDiamonds();
   }
 
-  get left() {
-    return this.container.x;
-  }
+  createDiamonds() {
+    const y = this.diamondsOffsetMin + Math.random() * (this.diamondsOffsetMax - this.diamondsOffsetMin)
 
-  get nextLeft() {
-    return this.left + this.dx;
-  }
-
-  // get nextRight() {
-  //   return this.right + this.dx;
-  // }
-
-  get right() {
-    return this.left + this.width;
-  }
-
-  get top() {
-    return this.container.y;
-  }
-
-  get bottom() {
-    return this.top + this.height;
+    for (let i =0; i < this.cols; i++) {
+      if(Math.random() < 0.4) {
+        const diamond = new Diamond(64 * i, -y)
+        this.container.addChild(diamond.sprite)
+        this.diamonds.push(diamond)
+      }
+    }
   }
 
   createContainer(x) {
@@ -81,10 +75,6 @@ export class Platform {
       hero.moveLeftByPlatform(this);
     }
 
-    // if(this.ifCollideRight(hero)) {
-    //   hero.moveByPlatformRight(this)
-    // }
-
     if (hero.platform === this) {
       hero.platform = null;
     }
@@ -108,12 +98,22 @@ export class Platform {
     );
   }
 
-  // ifCollideRight(hero) {
-  //   return (
-  //     hero.bottom >= this.top &&
-  //     hero.top <= this.bottom &&
-  //     hero.left >= this.right &&
-  //     hero.left <= this.nextRight
-  //   );
-  // }
+  get right() {
+    return this.left + this.width;
+  }
+
+  get top() {
+    return this.container.y;
+  }
+
+  get bottom() {
+    return this.top + this.height;
+  }
+  get left() {
+    return this.container.x;
+  }
+
+  get nextLeft() {
+    return this.left + this.dx;
+  }
 }
